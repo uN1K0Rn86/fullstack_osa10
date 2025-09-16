@@ -1,9 +1,9 @@
 import Text from "./Text";
 
-const Subheading = ({ heading }) => {
+const Subheading = ({ children }) => {
   return (
     <Text fontSize="subheading" fontWeight="bold">
-      {heading}
+      {children}
     </Text>
   );
 };

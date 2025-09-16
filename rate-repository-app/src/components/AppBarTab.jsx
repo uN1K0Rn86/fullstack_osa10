@@ -1,11 +1,11 @@
-import { View, Pressable } from "react-native";
+import { View, Pressable, Alert } from "react-native";
 import Text from "./Text";
 
-const AppBarTab = () => {
+const AppBarTab = ({ title }) => {
   return (
     <View>
       <Pressable onPress={() => Alert.alert("you pressed")}>
-        <Text color="textAppBar">Repositories</Text>
+        <Text color="textAppBar">{title}</Text>
       </Pressable>
     </View>
   );
