@@ -1,12 +1,19 @@
-import { View, Pressable, Alert } from "react-native";
+import { View, Pressable, Alert, StyleSheet } from "react-native";
 import Text from "./Text";
+import { Link } from "react-router-native";
 
-const AppBarTab = ({ title }) => {
+const styles = StyleSheet.create({
+  container: {
+    paddingLeft: 10,
+  },
+});
+
+const AppBarTab = ({ title, route }) => {
   return (
-    <View>
-      <Pressable onPress={() => Alert.alert("you pressed")}>
+    <View style={styles.container}>
+      <Link to={route}>
         <Text color="textAppBar">{title}</Text>
-      </Pressable>
+      </Link>
     </View>
   );
 };
