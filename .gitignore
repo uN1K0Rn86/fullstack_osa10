@@ -30,6 +30,7 @@
 
 # local env files
 **/.env*.local
+**/database.sqlite
 
 # typescript
 **/.tsbuildinfo
