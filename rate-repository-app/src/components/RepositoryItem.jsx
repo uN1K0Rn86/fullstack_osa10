@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     backgroundColor: theme.colors.primary,
     padding: 5,
-    borderRadius: 5,
+    borderRadius: 4,
   },
 });
 
