@@ -10,16 +10,16 @@ const styles = StyleSheet.create({
   },
 });
 
+export const renderedValue = (value) => {
+  if (value > 999) {
+    const rounded = Math.round(value / 100) / 10;
+    return `${rounded}k`;
+  }
+
+  return value.toString();
+};
+
 const ItemAttribute = ({ attribute, value }) => {
-  const renderedValue = (value) => {
-    if (value > 999) {
-      const rounded = Math.round(value / 100) / 10;
-      return `${rounded}k`;
-    }
-
-    return value;
-  };
-
   const valueToRender = renderedValue(value);
 
   return (

@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
 const RepositoryItem = ({ item }) => {
   return (
-    <View>
+    <View testID="repositoryItem">
       <View style={styles.container}>
         <Image
           style={styles.imageSize}
