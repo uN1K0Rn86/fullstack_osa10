@@ -33,6 +33,20 @@ export const GET_REPO_INFO = gql`
       reviewCount
       ratingAverage
       url
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;
