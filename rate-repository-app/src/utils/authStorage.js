@@ -11,10 +11,7 @@ class AuthStorage {
   }
 
   async setAccessToken(accessToken) {
-    await AsyncStorage.setItem(
-      `${this.namespace}:signintoken`,
-      JSON.stringify(accessToken)
-    );
+    await AsyncStorage.setItem(`${this.namespace}:signintoken`, accessToken);
   }
 
   async removeAccessToken() {
