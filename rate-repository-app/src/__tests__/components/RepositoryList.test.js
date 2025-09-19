@@ -1,6 +1,7 @@
 import { render, screen, within } from "@testing-library/react-native";
 import { RepositoryListContainer } from "../../components/RepositoryList";
 import { renderedValue } from "../../components/ItemAttribute";
+import { SortingContextProvider } from "../../contexts/SortingContext";
 
 describe("RepositoryList", () => {
   describe("RepositoryListContainer", () => {
@@ -48,7 +49,11 @@ describe("RepositoryList", () => {
         ],
       };
 
-      render(<RepositoryListContainer repositories={repositories} />);
+      render(
+        <SortingContextProvider value={["latest", jest.fn()]}>
+          <RepositoryListContainer repositories={repositories} />
+        </SortingContextProvider>
+      );
 
       const items = screen.getAllByTestId("repositoryItem");
       const [firstItem, secondItem] = items;

@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
 import { useNavigate } from "react-router-native";
+import SortingContext from "../contexts/SortingContext";
+import RepositorySort from "./RepositorySort";
 
 const styles = StyleSheet.create({
   separator: {
@@ -11,7 +14,11 @@ const styles = StyleSheet.create({
 
 export const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, navigate }) => {
+export const RepositoryListContainer = ({
+  repositories,
+  navigate,
+  sortingPrinciple,
+}) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -20,6 +27,7 @@ export const RepositoryListContainer = ({ repositories, navigate }) => {
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
+      ListHeaderComponent={<RepositorySort />}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate(`/${item.id}`)}>
@@ -31,11 +39,25 @@ export const RepositoryListContainer = ({ repositories, navigate }) => {
 };
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const [sortingPrinciple] = useContext(SortingContext);
+
+  const sortOptions = {
+    latest: { orderBy: "CREATED_AT", orderDirection: "DESC" },
+    highest: { orderBy: "RATING_AVERAGE", orderDirection: "DESC" },
+    lowest: { orderBy: "RATING_AVERAGE", orderDirection: "ASC" },
+  };
+
+  const variables = sortOptions[sortingPrinciple] ?? sortOptions.latest;
+
+  const { repositories } = useRepositories(variables);
   const navigate = useNavigate();
 
   return (
-    <RepositoryListContainer repositories={repositories} navigate={navigate} />
+    <RepositoryListContainer
+      repositories={repositories}
+      navigate={navigate}
+      sortingPrinciple={sortingPrinciple}
+    />
   );
 };
 
