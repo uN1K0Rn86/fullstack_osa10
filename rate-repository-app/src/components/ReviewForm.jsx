@@ -35,8 +35,8 @@ const validationSchema = yup.object().shape({
   repositoryName: yup.string().required("Repository name is required"),
   rating: yup
     .number()
-    .min(0)
-    .max(100)
+    .min(0, "Rating must be at least 0")
+    .max(100, "Rating cannot be over 100")
     .required("Rating must be a number between 0 and 100"),
   text: yup.string().optional(),
 });
@@ -85,7 +85,7 @@ const ReviewForm = () => {
         onChangeText={formik.handleChange("ownerName")}
       />
       {formik.touched.ownerName && formik.errors.ownerName && (
-        <Text color="error">Repository owner name is required</Text>
+        <Text color="error">{formik.errors.ownerName}</Text>
       )}
 
       <TextInput
@@ -100,7 +100,7 @@ const ReviewForm = () => {
         onChangeText={formik.handleChange("repositoryName")}
       />
       {formik.touched.repositoryName && formik.errors.repositoryName && (
-        <Text color="error">Repository name is required</Text>
+        <Text color="error">{formik.errors.repositoryName}</Text>
       )}
 
       <TextInput
@@ -114,7 +114,7 @@ const ReviewForm = () => {
         onChangeText={formik.handleChange("rating")}
       />
       {formik.touched.rating && formik.errors.rating && (
-        <Text color="error">Rating must be between 0 and 100</Text>
+        <Text color="error">{formik.errors.rating}</Text>
       )}
 
       <TextInput
