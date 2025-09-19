@@ -47,7 +47,10 @@ const RatingBadge = ({ rating }) => {
 
 const RepositoryInfo = ({ repository }) => {
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      style={{ marginBottom: 10 }}
+    >
       <RepositoryItem item={repository} showGitHubButton={true} />
     </ScrollView>
   );

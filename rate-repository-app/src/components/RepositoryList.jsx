@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useDebounce } from "use-debounce";
 import { FlatList, View, StyleSheet, Pressable } from "react-native";
 import RepositoryItem from "./RepositoryItem";
 import useRepositories from "../hooks/useRepositories";
@@ -17,7 +18,8 @@ export const ItemSeparator = () => <View style={styles.separator} />;
 export const RepositoryListContainer = ({
   repositories,
   navigate,
-  sortingPrinciple,
+  filterText,
+  setFilterText,
 }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -27,7 +29,9 @@ export const RepositoryListContainer = ({
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={<RepositorySort />}
+      ListHeaderComponent={
+        <RepositorySort filterText={filterText} setFilterText={setFilterText} />
+      }
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate(`/${item.id}`)}>
@@ -40,6 +44,8 @@ export const RepositoryListContainer = ({
 
 const RepositoryList = () => {
   const [sortingPrinciple] = useContext(SortingContext);
+  const [filterText, setFilterText] = useState("");
+  const [debouncedText] = useDebounce(filterText, 500);
 
   const sortOptions = {
     latest: { orderBy: "CREATED_AT", orderDirection: "DESC" },
@@ -47,7 +53,10 @@ const RepositoryList = () => {
     lowest: { orderBy: "RATING_AVERAGE", orderDirection: "ASC" },
   };
 
-  const variables = sortOptions[sortingPrinciple] ?? sortOptions.latest;
+  const variables = {
+    ...(sortOptions[sortingPrinciple] ?? sortOptions.latest),
+    searchKeyword: debouncedText,
+  };
 
   const { repositories } = useRepositories(variables);
   const navigate = useNavigate();
@@ -56,7 +65,8 @@ const RepositoryList = () => {
     <RepositoryListContainer
       repositories={repositories}
       navigate={navigate}
-      sortingPrinciple={sortingPrinciple}
+      filterText={filterText}
+      setFilterText={setFilterText}
     />
   );
 };
