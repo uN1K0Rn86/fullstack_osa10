@@ -34,7 +34,7 @@ export const RepositoryListContainer = ({
       }
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <Pressable onPress={() => navigate(`/${item.id}`)}>
+        <Pressable onPress={() => navigate(`/repos/${item.id}`)}>
           <RepositoryItem item={item} />
         </Pressable>
       )}

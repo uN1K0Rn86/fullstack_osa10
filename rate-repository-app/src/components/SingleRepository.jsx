@@ -5,45 +5,7 @@ import { GET_REPO_INFO } from "../graphql/queries";
 import Text from "./Text";
 import { ScrollView, FlatList, View, StyleSheet } from "react-native";
 import { ItemSeparator } from "./RepositoryList";
-import theme from "../theme";
-import { formatDate } from "../utils/helpers";
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    flex: 1,
-    backgroundColor: "white",
-    padding: 5,
-    gap: 5,
-  },
-  ratingContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: theme.colors.primary,
-    borderWidth: 2,
-  },
-  ratingText: {
-    color: theme.colors.primary,
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  subContainer: {
-    flexDirection: "column",
-    flex: 1,
-  },
-});
-
-const RatingBadge = ({ rating }) => {
-  return (
-    <View style={styles.ratingContainer}>
-      <Text style={styles.ratingText}>{rating}</Text>
-    </View>
-  );
-};
+import ReviewItem from "./ReviewItem";
 
 const RepositoryInfo = ({ repository }) => {
   return (
@@ -53,20 +15,6 @@ const RepositoryInfo = ({ repository }) => {
     >
       <RepositoryItem item={repository} showGitHubButton={true} />
     </ScrollView>
-  );
-};
-
-const ReviewItem = ({ review }) => {
-  const date = formatDate(review.createdAt);
-  return (
-    <View style={styles.container}>
-      <RatingBadge rating={review.rating} />
-      <View style={styles.subContainer}>
-        <Text fontWeight="bold">{review.user.username}</Text>
-        <Text>{date}</Text>
-        <Text>{review.text}</Text>
-      </View>
-    </View>
   );
 };
 
