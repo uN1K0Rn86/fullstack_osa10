@@ -3,7 +3,7 @@ import RepositoryItem from "./RepositoryItem";
 import { useQuery } from "@apollo/client";
 import { GET_REPO_INFO } from "../graphql/queries";
 import Text from "./Text";
-import { ScrollView, FlatList, View, StyleSheet } from "react-native";
+import { ScrollView, FlatList } from "react-native";
 import { ItemSeparator } from "./RepositoryList";
 import ReviewItem from "./ReviewItem";
 
