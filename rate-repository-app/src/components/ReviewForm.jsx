@@ -50,10 +50,8 @@ const ReviewForm = () => {
       ...values,
       rating: Number(values.rating),
     };
-    console.log(review);
     try {
       const data = await createReview(review);
-      console.log(data);
       navigate(`/${data.createReview.repositoryId}`);
     } catch (e) {
       console.log(e);

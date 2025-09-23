@@ -5,7 +5,6 @@ const useDeleteReview = () => {
   const [mutate, result] = useMutation(DELETE_REVIEW);
 
   const deleteReview = async (id) => {
-    console.log("hook", id);
     const { data } = await mutate({
       variables: {
         deleteReviewId: id,

@@ -24,7 +24,6 @@ const Button = ({ status, text, type }) => {
 
   const onClick = () => {
     dispatch({ type });
-    console.log("pressed");
   };
 
   return (

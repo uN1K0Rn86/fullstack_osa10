@@ -6,6 +6,7 @@ import useRepositories from "../hooks/useRepositories";
 import { useNavigate } from "react-router-native";
 import SortingContext from "../contexts/SortingContext";
 import RepositorySort from "./RepositorySort";
+import Text from "./Text";
 
 const styles = StyleSheet.create({
   separator: {
@@ -17,6 +18,7 @@ export const ItemSeparator = () => <View style={styles.separator} />;
 
 export const RepositoryListContainer = ({
   repositories,
+  onEndReach,
   navigate,
   filterText,
   setFilterText,
@@ -28,6 +30,8 @@ export const RepositoryListContainer = ({
   return (
     <FlatList
       data={repositoryNodes}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={
         <RepositorySort filterText={filterText} setFilterText={setFilterText} />
@@ -55,15 +59,25 @@ const RepositoryList = () => {
 
   const variables = {
     ...(sortOptions[sortingPrinciple] ?? sortOptions.latest),
+    first: 6,
     searchKeyword: debouncedText,
   };
 
-  const { repositories } = useRepositories(variables);
+  const { repositories, fetchMore, loading, error } =
+    useRepositories(variables);
   const navigate = useNavigate();
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error: {error}</Text>;
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <RepositoryListContainer
       repositories={repositories}
+      onEndReach={onEndReach}
       navigate={navigate}
       filterText={filterText}
       setFilterText={setFilterText}
